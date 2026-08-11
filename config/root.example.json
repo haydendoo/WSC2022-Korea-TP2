@@ -1,0 +1,7 @@
+{
+  "RedisHost": "wschina.hqvb4d.ng.0001.use1.cache.amazonaws.com",
+  "RedisPort": "6379",
+  "FsPath": "./",
+  "Port": 80,
+  "Bucket": "unicorn-us-es-ws-1903"
+}

@@ -1,0 +1,7 @@
+{
+  "RedisHost": "redis",
+  "RedisPort": "6379",
+  "FsPath": "/data/cache/",
+  "Port": 80,
+  "Bucket": ""
+}

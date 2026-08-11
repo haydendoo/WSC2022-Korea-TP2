@@ -1,0 +1,54 @@
+# Local practice environment for the root/stub binaries ONLY.
+#
+# This is a convenience for testing the Go services on a laptop before
+# touching AWS - it is NOT a model for the competition architecture and
+# is not built by Terraform. Redis and MySQL here are single, uncentralized
+# containers; the actual competition calls for centralized ElastiCache/RDS
+# that participants design themselves.
+#
+# DBSecretArn/Bucket are left empty in config/*.local.json since Secrets
+# Manager and S3 require real AWS - the stub service falls back to its
+# filesystem cache when no database is configured, which is enough to
+# exercise GET / and GET /unicorns/{id} locally.
+#
+# Usage: docker compose -f docker/docker-compose.yaml up --build
+
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: unicorndb
+    volumes:
+      - ../database/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    ports:
+      - "3306:3306"
+
+  root:
+    build:
+      context: ../services/root
+    depends_on:
+      - redis
+    volumes:
+      - ../config/root.local.json:/app/config.json:ro
+      - root-cache:/data/cache
+    ports:
+      - "8080:80"
+
+  stub:
+    build:
+      context: ../services/stub
+    volumes:
+      - ../config/stub.local.json:/app/config.json:ro
+      - stub-cache:/data/cache
+    ports:
+      - "8081:80"
+
+volumes:
+  root-cache:
+  stub-cache:

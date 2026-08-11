@@ -1,0 +1,7 @@
+{
+  "DBSecretArn": "arn:aws:secretsmanager:region:accountid:secret:prod-7aKIJz",
+  "DBName": "unicorn",
+  "FsPath": "./",
+  "Bucket": "unicorn-us-es-ws-1903",
+  "Port": 80
+}

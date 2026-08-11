@@ -1,0 +1,7 @@
+{
+  "DBSecretArn": "",
+  "DBName": "unicorndb",
+  "FsPath": "/data/cache/",
+  "Bucket": "",
+  "Port": 80
+}
